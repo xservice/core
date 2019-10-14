@@ -63,10 +63,10 @@ export default class Service<T = {}> extends EventEmitter {
       if (methodMeta) {
         const methodPathes: { method: Methods, path: string }[] = [];
         if (methodMeta.has('router.method.router')) methodPathes.push({ method: 'router', path: methodMeta.get('router.method.router') });
-        if (methodMeta.has('router.method.get')) methodPathes.push({ method: 'router', path: methodMeta.get('router.method.get') });
-        if (methodMeta.has('router.method.post')) methodPathes.push({ method: 'router', path: methodMeta.get('router.method.post') });
-        if (methodMeta.has('router.method.put')) methodPathes.push({ method: 'router', path: methodMeta.get('router.method.put') });
-        if (methodMeta.has('router.method.delete')) methodPathes.push({ method: 'router', path: methodMeta.get('router.method.delete') });
+        if (methodMeta.has('router.method.get')) methodPathes.push({ method: 'get', path: methodMeta.get('router.method.get') });
+        if (methodMeta.has('router.method.post')) methodPathes.push({ method: 'post', path: methodMeta.get('router.method.post') });
+        if (methodMeta.has('router.method.put')) methodPathes.push({ method: 'put', path: methodMeta.get('router.method.put') });
+        if (methodMeta.has('router.method.delete')) methodPathes.push({ method: 'delete', path: methodMeta.get('router.method.delete') });
         if (methodPathes.length > 1) {
           console.warn('you cannot set multi vpc methods on ' + property + ' invokeing method.');
           continue;
