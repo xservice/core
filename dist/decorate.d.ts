@@ -8,14 +8,14 @@ export declare enum NAMESPACE {
 export declare class TargetMetadata {
     private readonly stacks;
     set(key: string, value: any): this;
-    get(key: string): any;
+    get<T = any>(key: string): T;
     has(key: string): boolean;
     static bind(target: Function): TargetMetadata;
 }
 export declare class MethodMetadata {
     private readonly stacks;
     set(key: string, value: any): this;
-    get(key: string): any;
+    get<T = any>(key: string): T;
     has(key: string): boolean;
     static bind<T>(target: T): MethodMetadata;
 }

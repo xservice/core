@@ -51,8 +51,8 @@ export default class Service<T = {}> extends EventEmitter {
 
   bind<U = any>(target: interfaces.Newable<U>) {
     const targetMeta = Reflect.getMetadata(NAMESPACE.TARGET, target) as TargetMetadata;
-    const prefix = targetMeta ? targetMeta.get('router.prefix') as string : '/';
-    const use = targetMeta ? targetMeta.get('router.prefix.middleware') as ComposeMiddleware[] : [];
+    const prefix = targetMeta ? targetMeta.get('router.prefix') as string || '/' : '/';
+    const use = targetMeta ? targetMeta.get('router.prefix.middleware') as ComposeMiddleware[] || [] : [];
     const properties = Object.getOwnPropertyNames(target.prototype);
     const isInversify = Reflect.hasMetadata('inversify:paramtypes', target);
     const clazzName = target.name;

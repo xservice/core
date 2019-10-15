@@ -333,8 +333,8 @@ class Service extends EventEmitter {
     }
     bind(target) {
         const targetMeta = Reflect.getMetadata(exports.NAMESPACE.TARGET, target);
-        const prefix = targetMeta ? targetMeta.get('router.prefix') : '/';
-        const use = targetMeta ? targetMeta.get('router.prefix.middleware') : [];
+        const prefix = targetMeta ? targetMeta.get('router.prefix') || '/' : '/';
+        const use = targetMeta ? targetMeta.get('router.prefix.middleware') || [] : [];
         const properties = Object.getOwnPropertyNames(target.prototype);
         const isInversify = Reflect.hasMetadata('inversify:paramtypes', target);
         const clazzName = target.name;

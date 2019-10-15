@@ -16,8 +16,8 @@ export class TargetMetadata {
     return this;
   }
 
-  get(key: string) {
-    return this.stacks.get(key);
+  get<T = any>(key: string) {
+    return this.stacks.get(key) as T;
   }
 
   has(key: string) {
@@ -43,8 +43,8 @@ export class MethodMetadata {
     return this;
   }
 
-  get(key: string) {
-    return this.stacks.get(key);
+  get<T = any>(key: string) {
+    return this.stacks.get(key) as T;
   }
 
   has(key: string) {
