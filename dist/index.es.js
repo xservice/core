@@ -405,7 +405,7 @@ class Service extends EventEmitter {
                             }
                         }
                         if (ctx.body && ctx.method === 'router') {
-                            this.frameworkerRenderer.serviceRender(ctx.body);
+                            this.frameworkerRenderer.serviceRender(targetMeta, methodMeta, ctx.body);
                         }
                         await next();
                     });

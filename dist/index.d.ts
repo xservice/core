@@ -9,7 +9,7 @@ export * from './shared/compose';
 export interface FrameworkerRenderer {
     serviceMount(): void;
     serviceInvoke(target: any): any;
-    serviceRender(component: any): void;
+    serviceRender(target: TargetMetadata, method: MethodMetadata, component: any): void;
     serviceMethodBinding?(meta: MethodMetadata): void;
     serviceTargetBinding?(meta: TargetMetadata): void;
 }

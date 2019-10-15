@@ -11,7 +11,7 @@ export * from './shared/compose';
 export interface FrameworkerRenderer {
   serviceMount(): void;
   serviceInvoke(target: any): any;
-  serviceRender(component: any): void;
+  serviceRender(target:TargetMetadata, method:MethodMetadata, component: any): void;
   serviceMethodBinding?(meta: MethodMetadata): void;
   serviceTargetBinding?(meta: TargetMetadata): void;
 }
@@ -118,7 +118,7 @@ export default class Service<T = {}> extends EventEmitter {
               }
             }
             if (ctx.body && ctx.method === 'router') {
-              this.frameworkerRenderer.serviceRender(ctx.body);
+              this.frameworkerRenderer.serviceRender(targetMeta, methodMeta, ctx.body);
             }
             await next();
           });
