@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { MonitorEventListener, Context } from '@xservice/server';
 import Router from '@xservice/radix';
 import { Container, interfaces } from 'inversify';
-import { MethodMetadata } from './decorate';
+import { TargetMetadata, MethodMetadata } from './decorate';
 import { EventEmitter } from './shared/events';
 export * from './decorate';
 export * from './shared/compose';
@@ -10,7 +10,8 @@ export interface FrameworkerRenderer {
     serviceMount(): void;
     serviceInvoke(target: any): any;
     serviceRender(component: any): void;
-    serviceBinding?(meta: MethodMetadata): void;
+    serviceMethodBinding?(meta: MethodMetadata): void;
+    serviceTargetBinding?(meta: TargetMetadata): void;
 }
 export declare type IServiceOptions = {
     prefix?: string;

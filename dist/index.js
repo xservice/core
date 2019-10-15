@@ -340,6 +340,9 @@ class Service extends EventEmitter {
         const clazzName = target.name;
         if (!clazzName && isInversify)
             throw new Error('miss class name.');
+        if (this.frameworkerRenderer.serviceTargetBinding) {
+            this.frameworkerRenderer.serviceTargetBinding(targetMeta);
+        }
         for (let i = 0; i < properties.length; i++) {
             const property = properties[i];
             const that = target.prototype[property];
@@ -364,8 +367,8 @@ class Service extends EventEmitter {
                         ' invokeing method.');
                     continue;
                 }
-                if (this.frameworkerRenderer.serviceBinding) {
-                    this.frameworkerRenderer.serviceBinding(methodMeta);
+                if (this.frameworkerRenderer.serviceMethodBinding) {
+                    this.frameworkerRenderer.serviceMethodBinding(methodMeta);
                 }
                 if (methodPathes.length === 1) {
                     const method = methodPathes[0].method;
