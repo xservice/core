@@ -353,13 +353,20 @@ class Service extends EventEmitter {
                 if (methodMeta.has('router.method.delete'))
                     methodPathes.push({ method: 'delete', path: methodMeta.get('router.method.delete') });
                 if (methodPathes.length > 1) {
-                    console.warn('you cannot set multi vpc methods on ' + property + ' invokeing method.');
+                    console.warn('you cannot set multi vpc methods on '
+                        + property +
+                        ' invokeing method.');
                     continue;
+                }
+                if (this.frameworkerRenderer.serviceBinding) {
+                    this.frameworkerRenderer.serviceBinding(methodMeta);
                 }
                 if (methodPathes.length === 1) {
                     const method = methodPathes[0].method;
                     const uri = methodPathes[0].path;
-                    const middlewares = methodMeta.has('router.middleware') ? methodMeta.get('router.middleware') : [];
+                    const middlewares = methodMeta.has('router.middleware')
+                        ? methodMeta.get('router.middleware')
+                        : [];
                     const tmpMiddleware = use.concat(middlewares);
                     tmpMiddleware.push(async (ctx, next) => {
                         const parameterMeta = Reflect.getMetadata(NAMESPACE.PARAMETER, that);
