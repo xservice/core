@@ -123,7 +123,8 @@ export default class Service<T = {}> extends EventEmitter {
             await next();
           });
           const composed = Compose<Context & T>(tmpMiddleware);
-          const url = (prefix.endsWith('/') ? prefix.substring(0, -1) : prefix) + (!uri.startsWith('/') ? '/' + uri : uri);
+          let url = (prefix.endsWith('/') ? prefix.substring(0, -1) : prefix) + (!uri.startsWith('/') ? '/' + uri : uri);
+          if (url.endsWith('/')) url = url.substring(0, url.length - 1);
           this.router[method](url, ctx => composed(ctx));
         }
       }
