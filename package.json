@@ -1,6 +1,6 @@
 {
   "name": "@xservice/core",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Page monitor and page behavior operation architecture",
   "repository": {
     "type": "git",
