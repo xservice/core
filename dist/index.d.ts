@@ -6,12 +6,13 @@ import { TargetMetadata, MethodMetadata } from './decorate';
 import { EventEmitter } from './shared/events';
 export * from './decorate';
 export * from './shared/compose';
-export interface FrameworkerRenderer {
+export interface FrameworkerRenderer<T = {}> {
     serviceMount(): void;
     serviceInvoke(target: any): any;
     serviceRender(target: TargetMetadata, method: MethodMetadata, component: any): void;
     serviceMethodBinding?(meta: MethodMetadata): void;
     serviceTargetBinding?(meta: TargetMetadata): void;
+    serviceContext?(ctx: Context & T): void | Promise<void>;
 }
 export declare type IServiceOptions = {
     prefix?: string;
@@ -27,7 +28,7 @@ export default class Service<T = {}> extends EventEmitter {
     readonly container: Container;
     private readonly frameworkerRenderer;
     private mounted;
-    constructor(render: FrameworkerRenderer, options?: IServiceOptions);
+    constructor(render: FrameworkerRenderer<T>, options?: IServiceOptions);
     bind<U = any>(target: interfaces.Newable<U>): void;
     listen(mapState?: {
         [router: string]: string;

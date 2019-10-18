@@ -428,6 +428,9 @@ class Service extends EventEmitter {
             stop: ctx => this.sync('stop', ctx),
         });
         createServer(async (ctx) => {
+            if (this.frameworkerRenderer.serviceContext) {
+                await Promise.resolve(this.frameworkerRenderer.serviceContext(ctx));
+            }
             await this.router.lookup(ctx);
             if (!this.mounted && ctx.body) {
                 this.frameworkerRenderer.serviceMount();

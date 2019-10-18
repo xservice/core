@@ -8,12 +8,13 @@ import { EventEmitter } from './shared/events';
 
 export * from './decorate';
 export * from './shared/compose';
-export interface FrameworkerRenderer {
+export interface FrameworkerRenderer<T = {}> {
   serviceMount(): void;
   serviceInvoke(target: any): any;
   serviceRender(target:TargetMetadata, method:MethodMetadata, component: any): void;
   serviceMethodBinding?(meta: MethodMetadata): void;
   serviceTargetBinding?(meta: TargetMetadata): void;
+  serviceContext?(ctx: Context & T): void | Promise<void>;
 }
 
 export type IServiceOptions = {
@@ -32,9 +33,9 @@ export default class Service<T = {}> extends EventEmitter {
   private readonly options: IServiceOptions;
   public readonly router: Router<Context & T>;
   public readonly container = new Container();
-  private readonly frameworkerRenderer: FrameworkerRenderer;
+  private readonly frameworkerRenderer: FrameworkerRenderer<T>;
   private mounted: boolean = false;
-  constructor(render: FrameworkerRenderer, options: IServiceOptions = {}) {
+  constructor(render: FrameworkerRenderer<T>, options: IServiceOptions = {}) {
     super();
     this.frameworkerRenderer = render;
     this.options = options;
@@ -143,6 +144,9 @@ export default class Service<T = {}> extends EventEmitter {
       stop: ctx => this.sync('stop', ctx),
     });
     createServer(async (ctx) => {
+      if (this.frameworkerRenderer.serviceContext) {
+        await Promise.resolve(this.frameworkerRenderer.serviceContext(ctx));
+      }
       await this.router.lookup(ctx);
       if (!this.mounted && ctx.body) {
         this.frameworkerRenderer.serviceMount();
